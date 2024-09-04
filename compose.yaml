@@ -3,13 +3,16 @@ services:
     container_name: invoice-app
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     ports:
       - 3001:3000
       - 9230:9229
     environment:
       NODE_ENV: development
       MONGO_URL: mongodb://mongo:27017/invoice-db
+    expose:
+      - 3000
+    command: npm run dev
     depends_on:
       - mongo
     volumes:
