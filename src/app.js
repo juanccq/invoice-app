@@ -26,8 +26,12 @@ mongoose.connect( process.env.MONGO_URL, {
 
 // Route imports
 import authRoutes from './routes/authRoutes.js';
+import categoryRoutes from './routes/categoryRoutes.js';
+import productRoutes from './routes/productRoutes.js';
 
 // Route setup
 app.use( '/api/auth', authRoutes );
+app.use( '/api/category', categoryRoutes );
+app.use( '/api/product', productRoutes );
 
 export default app;
