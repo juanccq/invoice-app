@@ -46,14 +46,18 @@ class AuthService {
     }
 
     // Generate a JWT token
-    const token = jwt.sign(
+    const token = this.generateToken( user );
+
+    return { token, user };
+  };
+
+  generateToken( user ) {
+    return jwt.sign(
       { userId: user._id, role: user.role.name },
       process.env.JWT_SECRET,
       { expiresIn: '1d' }
     );
-
-    return { token, user };
-  };
+  }
 }
 
 export default new AuthService();

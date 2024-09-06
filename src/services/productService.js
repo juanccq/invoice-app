@@ -7,8 +7,6 @@ const uploadDir = config.uploadDir;
 
 class ProductService {
   async createProduct( { name, image, price, discount, categoryId, description, stock } ) {
-    console.log('++++ image', image);
-    
     const category = await Category.findById( categoryId );
     if(!category) {
       throw new Error( 'Category not found' );
