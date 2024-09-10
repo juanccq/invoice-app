@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import seedRoles from './roleSeeder.js';
+import seedUsers from './userSeeder.js';
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ async function runSeeders() {
 
     // Run each seeder
     await seedRoles();
+    await seedUsers();
 
     console.log('Seeding complete');
     

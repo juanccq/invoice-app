@@ -9,10 +9,12 @@
 
 # Dependency directories
 node_modules/
-package-lock.json
 
 
 # env files
 .env
 
 .DS_Store
+
+# assets
+/public/uploads/*.*
