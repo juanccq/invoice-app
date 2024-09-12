@@ -17,10 +17,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 // Database connection
-mongoose.connect( process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-} )
+mongoose.connect( process.env.MONGO_URL, {} )
   .then( () => console.log( 'MongoDB connected' ) )
   .catch( ( err ) => console.error( 'MongoDB connection error:', err) );
 
