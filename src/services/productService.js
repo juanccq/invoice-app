@@ -26,8 +26,32 @@ class ProductService {
     return product;
   }
 
-  async getAllProducts() {
-    return await Product.find().populate( 'category' );
+  async getAllProducts( { page = 1, limit = 10, sortBy = 'name', order = 'asc', filter = {}, search = '' } ) {
+    const skip = ( page -1 ) * limit;
+    const sortOrder = order === 'desc' ? -1 : 1;
+
+    // Add search filter for product name
+    if( search ) {
+      filter.name = { $regex: search, $options: 'i' }; // Case-insensitive search
+    }
+    
+
+    // Fetch products with pagination
+    const products = await Product.find( filter )
+      .skip( skip )
+      .limit( limit )
+      .sort( { [sortBy]: sortOrder } );
+
+    // count total products in the collection
+    const totalRecords = await Product.countDocuments( filter );
+
+    // Return products and metadata for pagination
+    return {
+      products,
+      totalRecords, 
+      totalPages: Math.ceil( totalRecords / limit ),
+      currentPage: page
+    };
   }
 
   async getProductById( productId ) {

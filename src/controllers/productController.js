@@ -17,8 +17,27 @@ class ProductController {
   }
 
   async getAllProducts( req, res ) {
+    const { page = 1, limit = 10, sortBy = 'name', order = 'asc', category, minPrice, maxPrice, search } = req.query; // Default to page1 and 10 reports per page
+
+    const filters = {};
+    if( category ) { filters.category = category; }
+    if( minPrice || maxPrice ) {
+      filters.price = {};
+      if( minPrice ) { filters.price.$gte = Number( minPrice ); }
+      if( maxPrice ) { filters.price.$lte = Number( maxPrice ); }
+    }
+
+
     try {
-      const products = await ProductService.getAllProducts();
+      const products = await ProductService.getAllProducts( {
+        page: Number( page ), 
+        limit: Number( limit ),
+        sortBy,
+        order,
+        filter: filters,
+        search
+      } );
+
       res.status( 200 ).json( products );
     } catch (error) {
       console.error( 'Get all Products error: ', error.message );
