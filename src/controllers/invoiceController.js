@@ -13,8 +13,30 @@ class InvoiceController {
   }
 
   async getAllInvoices( req, res ) {
+    const { page = 1, limit = 10, sortBy = 'createdAt', order = 'desc', customer, minTotal, maxTotal, startDate, endDate, search } = req.query; 
+
+    const filters = {};
+    if( customer ) { filters.customer = { $regex: customer, $options: 'i' }; }
+    if( minTotal || maxTotal ) {
+      filters.totalAmount = {};
+      if( minTotal ) { filters.totalAmount.$gte = Number( minTotal ); }
+      if( maxTotal ) { filters.totalAmount.$lte = Number( maxTotal ); }
+    }
+    if( startDate || endDate ) {
+      filters.createdAt = {};
+      if( startDate ) { filters.createdAt.$gte = new Date( startDate ); }
+      if( endDate ) { filters.createdAt.$lte = new Date( endDate ); }
+    }
+
     try {
-      const invoices = await invoiceService.getAllInvoices();
+      const invoices = await invoiceService.getAllInvoices( {
+        page: Number( page ), 
+        limit: Number( limit ),
+        sortBy,
+        order,
+        filter: filters,
+        search 
+      } );
       res.status( 200 ).json( invoices );
     } catch (error) {
       console.error( 'Get all Invoices error:', error.message );
