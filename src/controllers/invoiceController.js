@@ -1,4 +1,17 @@
+import { validateInvoice } from '../validations/invoiceValidator.js';
 import invoiceService from '../services/invoiceService.js';
+
+
+// Middleware to validate invoice before creating or updating
+const validateInvoiceMiddleware = (req, res, next) => {
+  const { error } = validateInvoice( req.body );
+
+  if( error ) {
+    return res.status( 400 ).json( { message: error.details[0].message } );
+  }
+
+  next();
+};
 
 class InvoiceController {
   async createInvoice( req, res ) {
@@ -76,4 +89,5 @@ class InvoiceController {
   }
 }
 
+export { validateInvoiceMiddleware };
 export default new InvoiceController();
