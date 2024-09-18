@@ -9,7 +9,7 @@ services:
       - 9230:9229
     environment:
       NODE_ENV: development
-      MONGO_URL: mongodb://mongo:27017/invoice-db
+      MONGO_URL: mongodb://mongo:27017/${MONGO_DB_NAME}
     expose:
       - 3000
     command: npm run dev
