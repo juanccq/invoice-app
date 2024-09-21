@@ -28,7 +28,7 @@ This app is for manage the 'sells' of a store, this app have modules for Product
 - `npm run db-seed` Create an **admin** user with the password.
 - `npm run db-dummy-seed` Fill the database with dummy data in `users`, `categories` and `products`.
 
-* If the app is running inside a Docker container, the scripts should be executed in the container shell. Use this command `docker exec -it invoice-app sh` *
+_If the app is running inside a Docker container, the scripts should be executed in the container shell. Use this command `docker exec -it invoice-app sh`_
 
 ## Docker for Production
 
